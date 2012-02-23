@@ -295,7 +295,7 @@ export PATH=/app/vendor/newrelic:/app/vendor/node/bin:/app/node_modules/.bin:/ap
 export LD_LIBRARY_PATH=/app/vendor/php/icu/lib:/app/vendor/php/ext:\$LD_LIBRARY_PATH
 cp /app/conf/php.ini /app/vendor/php/php.ini
 
-erb /app/vendor/newrelic/scripts/newrelic.ini.erb >> /app/vendor/php/php.ini
+erb /app/vendor/newrelic/scripts/newrelic.ini.template.erb >> /app/vendor/php/php.ini
 erb /app/vendor/newrelic/scripts/newrelic.cfg.template.erb > /app/vendor/newrelic/newrelic.cfg
 
 read HEROKU_PG_USER HEROKU_PG_PASSWORD HEROKU_PG_HOST HEROKU_PG_DB << HERE
@@ -331,7 +331,7 @@ cp /app/conf/php-fpm.conf /app/vendor/php/etc/php-fpm.conf
 cp /app/vendor/php/share/php/fpm/status.html /app/status.html
 erb /app/conf/nginx.conf.erb > /app/vendor/nginx/conf/nginx.conf
 
-erb /app/vendor/newrelic/scripts/newrelic.ini.erb >> /app/vendor/php/php.ini
+erb /app/vendor/newrelic/scripts/newrelic.ini.template.erb >> /app/vendor/php/php.ini
 erb /app/vendor/newrelic/scripts/newrelic.cfg.template.erb > /app/vendor/newrelic/newrelic.cfg
 
 if [ -d /app/www/app/cache ]; then
