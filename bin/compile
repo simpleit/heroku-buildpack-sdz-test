@@ -164,6 +164,9 @@ if [ ! -d $NEWRELIC_PATH ]; then
 fi
 
 echo "------------> Moving ext files to php ext directory"
+if [ ! -d $PHP_PATH/ext ]; then
+  mkdir $PHP_PATH/ext
+fi
 cp agent/newrelic-20100525.so $PHP_PATH/ext/
 
 # add php.ini conf
