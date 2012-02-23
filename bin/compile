@@ -164,6 +164,7 @@ if [ ! -d $NEWRELIC_PATH ]; then
 fi
 
 echo "------------> Moving ext files to php ext directory"
+cd ${BUILD_DIR}
 if [ ! -d $PHP_PATH/ext ]; then
   mkdir $PHP_PATH/ext
 fi
