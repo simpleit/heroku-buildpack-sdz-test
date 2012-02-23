@@ -157,7 +157,7 @@ cp conf/php.ini $PHP_PATH/php.ini
 
 echo "---------> Installing New Relic"
 cd ${BUILD_DIR}
-if [ ! -d $NEWRELIC_PATH ]
+if [ ! -d $NEWRELIC_PATH ]; then
   echo "---------> Bundling NewRelic"
   mkdir -p $NEWRELIC_PATH && cd $NEWRELIC_PATH
   curl --silent --max-time 500 --location $NEWRELIC_URL | tar xz
