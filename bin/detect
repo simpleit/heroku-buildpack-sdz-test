@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+if [ -f $1/web/app.php ]; then
+  echo "Symfony2" && exit 0
+else
+  echo "no" && exit 1
+fi
+
