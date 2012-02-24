@@ -359,10 +359,15 @@ mkdir /app/vendor/php/log/
 touch /app/vendor/php/log/php-fpm.log
 tail -F -n 0 /app/vendor/php/log/php-fpm.log &
 
+echo "--> Enable newrelic logging system"
+touch /app/vendor/php/log/newrelic-agent.log /app/vendor/php/log/newrelic-daemon.log
+tail -F -n 0 /app/vendor/php/log/newrelic-daemon.log &
+tail -F -n 0 /app/vendor/php/log/newrelic-agent.log &
+
 echo "--> Booting PHP-FPM & Nginx & newrelic"
+newrelic-daemon.x64
 php-fpm
 nginx
-newrelic-daemon.x64
 
 echo "--> Done!"
 EOF
