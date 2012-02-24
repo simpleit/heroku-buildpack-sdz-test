@@ -152,7 +152,7 @@ if [ ! -d $PHP_PATH ]; then
 fi
 echo "---------> Moving conf files to vendor directory"
 cd ${BUILD_DIR}
-cp conf/php-fpm.conf $PHP_PATH/etc/php-fmp.conf
+cp conf/php-fpm.conf $PHP_PATH/etc/php-fpm.conf
 cp conf/php.ini $PHP_PATH/php.ini
 
 echo "---------> Installing New Relic"
