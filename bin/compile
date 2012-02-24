@@ -365,7 +365,7 @@ tail -F -n 0 /app/vendor/php/log/newrelic-daemon.log &
 tail -F -n 0 /app/vendor/php/log/newrelic-agent.log &
 
 echo "--> Booting PHP-FPM & Nginx & newrelic"
-newrelic-daemon.x64
+newrelic-daemon.x64 -c /app/vendor/newrelic/newrelic.cfg
 php-fpm
 nginx
 
