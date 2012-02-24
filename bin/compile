@@ -168,7 +168,7 @@ echo "------------> Moving ext files to php ext directory"
 if [ ! -d $PHP_PATH/ext ]; then
   mkdir $PHP_PATH/ext
 fi
-cp agent/newrelic-20100525.so ${BUILD_DIR}/$PHP_PATH/ext/
+cp agent/newrelic-20090626.so ${BUILD_DIR}/$PHP_PATH/ext/
 
 # add php.ini conf
 #erb scripts/newrelic.ini.erb >> ${BUILD_DIR}/$PHP_PATH/php.ini
