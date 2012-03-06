@@ -11,6 +11,8 @@
 # bin/compile <build-dir> <cache-dir>
 
 env
+
+echo "$SF_ENF"
 exit 1
 
 export SF_ENV="dev"
