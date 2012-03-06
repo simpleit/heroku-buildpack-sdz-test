@@ -10,9 +10,9 @@
 
 # bin/compile <build-dir> <cache-dir>
 
-env
+#env
 
-echo "$SF_ENF"
+echo "SF env: $SF_ENV"
 exit 1
 
 export SF_ENV="dev"
