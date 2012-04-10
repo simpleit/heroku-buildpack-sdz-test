@@ -339,6 +339,8 @@ erb /app/conf/nginx.conf.erb > /app/vendor/nginx/conf/nginx.conf
 erb /app/vendor/newrelic/scripts/newrelic.ini.template.erb >> /app/vendor/php/php.ini
 erb /app/vendor/newrelic/scripts/newrelic.cfg.template.erb > /app/vendor/newrelic/newrelic.cfg
 
+echo "extension=sundown.so" >> /app/vendor/php/php.ini
+
 if [ -d /app/www/app/cache ]; then
     rm -rf /app/www/app/cache
 fi
