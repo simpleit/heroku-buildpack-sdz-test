@@ -268,13 +268,13 @@ echo "extension=sundown.so" >> $PHP_PATH/php.ini
 
 # Sets the debug flag depending on Sf2 env (declared at the begeining of the file)
 SF_DEBUG="--no-debug"
-if [ "$SF_ENV" != "prod" ]; then
-    SF_DEBUG=""
-fi
+#if [ "$SF_ENV" != "prod" ]; then
+#    SF_DEBUG=""
+#fi
 
 # Deploying assets
-${PHP_PATH}/bin/php --php-ini $PHP_PATH/php.ini www/app/console assets:install www/web --env=${SF_ENV}
-${PHP_PATH}/bin/php --php-ini $PHP_PATH/php.ini www/app/console assetic:dump ${SF_DEBUG} --env=${SF_ENV}
+${PHP_PATH}/bin/php --php-ini $PHP_PATH/php.ini --define max_execution_time=120 www/app/console assets:install www/web --env=${SF_ENV}
+${PHP_PATH}/bin/php --php-ini $PHP_PATH/php.ini --define max_execution_time=120 www/app/console assetic:dump ${SF_DEBUG} --env=${SF_ENV}
 
 # ----BOOT SCRIPT----------------------------------------------------------
 
