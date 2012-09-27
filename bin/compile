@@ -256,8 +256,11 @@ echo "---------> Install Sf2 assets"
 # We need to have parameters sets into Sf2 in order to build assets...
 HEROKU_APP_PATH_STRIPPED=$(strip_slashes "${BUILD_DIR}")
 HEROKU_NODE_PATH_STRIPPED=$(strip_slashes "${NODE_PATH}")
-cat "conf/parameters.ini" | sed -e "s/__HEROKU_APP_PATH__/${HEROKU_APP_PATH_STRIPPED}/g" \
-        -e "s/__HEROKU_NODE_PATH__/${HEROKU_NODE_PATH_STRIPPED}/g" > www/app/config/parameters.ini
+
+date +%s > compilation_time
+
+cat "conf/parameters.yml" | sed -e "s/__HEROKU_APP_PATH__/${HEROKU_APP_PATH_STRIPPED}/g" \
+        -e "s/__HEROKU_NODE_PATH__/${HEROKU_NODE_PATH_STRIPPED}/g" > www/app/config/parameters.yml
 
 # We need this to use PHP in Sf2 task when building assets...
 export LD_LIBRARY_PATH=${BUILD_DIR}/${PHP_PATH}/icu/lib:${BUILD_DIR}/${PHP_PATH}/ext:${LD_LIBRARY_PATH}
@@ -265,6 +268,20 @@ export PATH=${BUILD_DIR}/${NODE_PATH}/bin:${BUILD_DIR}/node_modules/.bin:$PATH
 
 echo "extension_dir=${PHP_PATH}/ext" >> $PHP_PATH/php.ini
 echo "extension=sundown.so" >> $PHP_PATH/php.ini
+
+# check if we have Composer dependencies and vendors are not bundled
+if [ -f www/composer.json ]; then
+  GIT_DIR_ORIG=$GIT_DIR
+  unset GIT_DIR
+  echo "-----> Installing Composer dependencies"
+  COMPOSER_URL="http://getcomposer.org/composer.phar"
+  curl --silent --max-time 60 --location "$COMPOSER_URL" > www/composer.phar
+  cd www 
+  ${PHP_PATH}/bin/php --php-ini $PHP_PATH/php.ini composer.phar install --prefer-source
+  cd $BUILD_DIR
+  rm www/composer.phar
+  export GIT_DIR=$GIT_DIR_ORIG
+fi
 
 # Sets the debug flag depending on Sf2 env (declared at the begeining of the file)
 SF_DEBUG="--no-debug"
@@ -305,8 +322,10 @@ HERE
 
 HEROKU_APP_PATH_STRIPPED=\$(strip_slashes "/app")
 HEROKU_NODE_PATH_STRIPPED=\$(strip_slashes "$NODE_PATH")
+HEROKU_ASSETS_VERSION=\`cat /app/compilation_time\`
 
-cat "/app/conf/parameters.ini" | sed -e "s/__HEROKU_PG_HOST__/\${HEROKU_PG_HOST}/g" \
+
+cat "/app/conf/parameters.yml" | sed -e "s/__HEROKU_PG_HOST__/\${HEROKU_PG_HOST}/g" \
 	-e "s/__HEROKU_PG_DB__/\${HEROKU_PG_DB}/g" \
 	-e "s/__HEROKU_PG_PORT__/\${HEROKU_PG_PORT}/g" \
 	-e "s/__HEROKU_PG_USER__/\${HEROKU_PG_USER}/g" \
@@ -314,7 +333,8 @@ cat "/app/conf/parameters.ini" | sed -e "s/__HEROKU_PG_HOST__/\${HEROKU_PG_HOST}
 	-e "s/__HEROKU_SENDGRID_PASSWORD__/\${SENDGRID_PASSWORD}/g" \
 	-e "s/__HEROKU_SENDGRID_USER__/\${SENDGRID_USERNAME}/g" \
         -e "s/__HEROKU_APP_PATH__/\${HEROKU_APP_PATH_STRIPPED}/g" \
-        -e "s/__HEROKU_NODE_PATH__/\${HEROKU_NODE_PATH_STRIPPED}/g" > /app/www/app/config/parameters.ini
+        -e "s/__HEROKU_NODE_PATH__/\${HEROKU_NODE_PATH_STRIPPED}/g" \
+        -e "s/__HEROKU_ASSETS_VERSION__/\${HEROKU_ASSETS_VERSION}/g" > /app/www/app/config/parameters.yml
 
 cat "/app/www/app/config/config.yml" | sed -e "s/#storage_id/storage_id/g" > /app/www/app/config/config.yml.heroku
 rm -rf /app/www/app/config/config.yml
