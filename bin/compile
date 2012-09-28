@@ -249,7 +249,9 @@ cd $BUILD_DIR
 echo "-----> Installing Sf2 application"
 
 # Delete sub '.git' folders for each vendor
-find www/vendor -name .git -type d | xargs rm -rf
+if [ -d www/vendor ]; then
+    find www/vendor -name .git -type d | xargs rm -rf
+fi
 
 echo "---------> Install Sf2 assets"
 
