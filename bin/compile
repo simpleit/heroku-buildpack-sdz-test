@@ -248,10 +248,6 @@ cd $BUILD_DIR
 
 echo "-----> Installing Sf2 application"
 
-# Delete sub '.git' folders for each vendor
-if [ -d www/vendor ]; then
-    find www/vendor -name .git -type d | xargs rm -rf
-fi
 
 echo "---------> Install Sf2 assets"
 
@@ -299,6 +295,11 @@ if [ -f www/composer.json ]; then
   rm www/composer.phar
 
   export GIT_DIR=$GIT_DIR_ORIG
+fi
+
+# Delete sub '.git' folders for each vendor
+if [ -d www/vendor ]; then
+    find www/vendor -name .git -type d | xargs rm -rf
 fi
 
 # Sets the debug flag depending on Sf2 env (declared at the begeining of the file)
