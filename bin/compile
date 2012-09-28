@@ -279,9 +279,25 @@ if [ -f www/composer.json ]; then
   COMPOSER_URL="http://getcomposer.org/composer.phar"
   curl --silent --max-time 60 --location "$COMPOSER_URL" > www/composer.phar
   cd www 
-  ../${PHP_PATH}/bin/php --php-ini ../$PHP_PATH/php.ini composer.phar install --prefer-source
+  ../${PHP_PATH}/bin/php --php-ini ../$PHP_PATH/php.ini composer.phar install --prefer-source --no-scripts
   cd $BUILD_DIR
+  
+  # This steps (building bootstrap & install requirement files) are adapted from SensioDistributionBundle/Composer/ScriptHandler.php Composer scripts)
+  # Please update the following lines if the SensioDistributionBundle has changed.
+  echo "-----> Build Boostrap"
+  ${PHP_PATH}/bin/php --php-ini $PHP_PATH/php.ini www/vendor/sensio/distribution-bundle/Sensio/Bundle/DistributionBundle/Resources/bin/build_bootstrap.php
+  
+  echo "-----> Install requirement files"
+  cp www/vendor/sensio/distribution-bundle/Sensio/Bundle/DistributionBundle/Resources/skeleton/app/SymfonyRequirements.php www/app/SymfonyRequirements.php
+  cp www/vendor/sensio/distribution-bundle/Sensio/Bundle/DistributionBundle/Resources/skeleton/app/check.php www/app/check.php
+
+  if [ -f www/web/config.php ]; then
+    www/vendor/sensio/distribution-bundle/Sensio/Bundle/DistributionBundle/Resources/skeleton/web/config.php www/web/config.php
+  fi
+
+  echo "-----> Delete composer.phar script"
   rm www/composer.phar
+
   export GIT_DIR=$GIT_DIR_ORIG
 fi
 
