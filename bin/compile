@@ -292,7 +292,7 @@ if [ -f www/composer.json ]; then
   cp www/vendor/sensio/distribution-bundle/Sensio/Bundle/DistributionBundle/Resources/skeleton/app/check.php www/app/check.php
 
   if [ -f www/web/config.php ]; then
-    www/vendor/sensio/distribution-bundle/Sensio/Bundle/DistributionBundle/Resources/skeleton/web/config.php www/web/config.php
+    cp www/vendor/sensio/distribution-bundle/Sensio/Bundle/DistributionBundle/Resources/skeleton/web/config.php www/web/config.php
   fi
 
   echo "-----> Delete composer.phar script"
