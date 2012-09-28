@@ -266,7 +266,7 @@ cat "conf/parameters.yml" | sed -e "s/__HEROKU_APP_PATH__/${HEROKU_APP_PATH_STRI
 
 # We need this to use PHP in Sf2 task when building assets...
 export LD_LIBRARY_PATH=${BUILD_DIR}/${PHP_PATH}/icu/lib:${BUILD_DIR}/${PHP_PATH}/ext:${LD_LIBRARY_PATH}
-export PATH=${BUILD_DIR}/${NODE_PATH}/bin:${BUILD_DIR}/node_modules/.bin:$PATH
+export PATH=${BUILD_DIR}/${NODE_PATH}/bin:${BUILD_DIR}/node_modules/.bin:${BUILD_DIR}/${PHP_PATH}/bin:$PATH
 
 echo "extension_dir=${PHP_PATH}/ext" >> $PHP_PATH/php.ini
 echo "extension=sundown.so" >> $PHP_PATH/php.ini
