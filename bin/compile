@@ -279,7 +279,7 @@ if [ -f www/composer.json ]; then
   COMPOSER_URL="http://getcomposer.org/composer.phar"
   curl --silent --max-time 60 --location "$COMPOSER_URL" > www/composer.phar
   cd www 
-  ../${PHP_PATH}/bin/php --php-ini $PHP_PATH/php.ini composer.phar install --prefer-source
+  ../${PHP_PATH}/bin/php --php-ini ../$PHP_PATH/php.ini composer.phar install --prefer-source
   cd $BUILD_DIR
   rm www/composer.phar
   export GIT_DIR=$GIT_DIR_ORIG
