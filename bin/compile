@@ -354,7 +354,7 @@ cat "/app/conf/parameters.yml" | sed -e "s/__HEROKU_PG_HOST__/\${HEROKU_PG_HOST}
         -e "s/__HEROKU_NODE_PATH__/\${HEROKU_NODE_PATH_STRIPPED}/g" \
         -e "s/__HEROKU_ASSETS_VERSION__/\${HEROKU_ASSETS_VERSION}/g" > /app/www/app/config/parameters.yml
 
-cat "/app/www/app/config/config.yml" | sed -e "s/#storage_id/storage_id/g" > /app/www/app/config/config.yml.heroku
+cat "/app/www/app/config/config.yml" | sed -e "s/#handler_id/handler_id/g" > /app/www/app/config/config.yml.heroku
 rm -rf /app/www/app/config/config.yml
 mv /app/www/app/config/config.yml.heroku /app/www/app/config/config.yml
 
